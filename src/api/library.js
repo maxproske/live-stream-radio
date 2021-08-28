@@ -8,6 +8,13 @@ const getAllAudio = async (path, getConfig) => {
   // Find al of our files with the extensions
   let allFiles = [];
   const config = await getConfig();
+
+  if (config.radio.audio_file) {
+    allFiles = [...allFiles, ...find.fileSync(config.radio.audio_file, `${path}${config.radio.audio_directory}`)];
+
+    return allFiles;
+  }
+
   supportedFileTypes.supportedAudioTypes.forEach(extension => {
     allFiles = [...allFiles, ...find.fileSync(extension, `${path}${config.radio.audio_directory}`)];
   });
