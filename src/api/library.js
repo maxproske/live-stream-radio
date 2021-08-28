@@ -10,7 +10,7 @@ const getAllAudio = async (path, getConfig) => {
   const config = await getConfig();
 
   if (config.radio.audio_file) {
-    allFiles = [...allFiles, ...find.fileSync(config.radio.audio_file, `${path}${config.radio.audio_directory}`)];
+    allFiles = [...allFiles, ...find.fileSync(new RegExp(config.radio.audio_file), `${path}${config.radio.audio_directory}`)];
 
     return allFiles;
   }
