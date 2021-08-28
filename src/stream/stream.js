@@ -69,11 +69,20 @@ module.exports = async (path, config, outputLocation, endCallback, errorCallback
   console.log(chalk.magenta(`Finding audio... 🎤`));
   console.log('\n');
 
+  // Find song by filename
+  if (config.radio.audio_file) {
+    randomSong = await getRandomFileWithExtensionFromPath(
+      [new RegExp(config.radio.audio_file)],
+      `${path}${config[typeKey].audio_directory}`
+    );
+  } 
   // Find a random song from the config directory
-  const randomSong = await getRandomFileWithExtensionFromPath(
-    supportedFileTypes.supportedAudioTypes,
-    `${path}${config[typeKey].audio_directory}`
-  );
+  else {
+    randomSong = await getRandomFileWithExtensionFromPath(
+      supportedFileTypes.supportedAudioTypes,
+      `${path}${config[typeKey].audio_directory}`
+      );
+  }
 
   console.log(chalk.blue(`Playing the audio:`));
   console.log(randomSong);
